@@ -8,8 +8,9 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  CircularProgress,
 } from "@mui/material";
-import { styled } from "@mui/system";
+import { styled, useTheme } from "@mui/system";
 
 const StyledPaper = styled(Paper)({
   width: "100%",
@@ -21,8 +22,14 @@ const StyledTable = styled(Table)({
   minWidth: 1080,
 });
 
+const StyledCircularProgress = styled(CircularProgress)(({ theme }) => ({
+  margin: theme.spacing(2),
+}));
+
 function App() {
   const [customers, setCustomers] = useState("");
+  const [completed, setCompleted] = useState(0);
+  const theme = useTheme();
 
   useEffect(() => {
     const callApi = async () => {
@@ -34,6 +41,17 @@ function App() {
     callApi()
       .then((res) => setCustomers(res))
       .catch((err) => console.log(err));
+
+      const progress = () => {
+        setCompleted((prevCompleted) =>
+          prevCompleted >= 100 ? 0 : prevCompleted + 1
+        );
+      };
+  
+      const timer = setInterval(progress, 20);
+      return () => {
+        clearInterval(timer);
+      };
   }, []);
 
   return (
@@ -50,8 +68,8 @@ function App() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {customers
-            ? customers.map((c) => (
+          {customers ? (
+            customers.map((c) => (
                 <Customer
                   key={c.id} // map 을 사용하려면 key 라는 속성이 있어야 함(안하면 Console창에 에러가 발생)
                   id={c.id}
@@ -62,7 +80,16 @@ function App() {
                   job={c.job}
                 />
               ))
-            : ""}
+            ) : (
+              <TableRow>
+              <TableCell colSpan="6" align="center">
+                <StyledCircularProgress
+                  variant="indeterminate"
+                  value={completed}
+                />
+              </TableCell>
+            </TableRow>
+            )}
         </TableBody>
       </StyledTable>
     </StyledPaper>
