@@ -12,6 +12,13 @@ import {
 } from "@mui/material";
 import { styled, useTheme } from "@mui/system";
 
+const port = 3000;
+App.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+})
+
+module.exports = App;
+
 const StyledPaper = styled(Paper)({
   width: "100%",
   marginTop: "24px",
