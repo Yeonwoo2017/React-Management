@@ -12,9 +12,6 @@ import {
 } from "@mui/material";
 import { styled, useTheme } from "@mui/system";
 
-
-
-
 const StyledPaper = styled(Paper)({
   width: "100%",
   marginTop: "24px",

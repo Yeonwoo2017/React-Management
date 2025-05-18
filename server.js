@@ -34,6 +34,5 @@ app.get("/api/customers", (req, res) => {
       },
   ]);
 });
-app.get("/", (req, res) => res.send("Express on Vercel"));
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
-module.exports = app;
