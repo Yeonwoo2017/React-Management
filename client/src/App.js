@@ -13,7 +13,7 @@ import {
 import { styled, useTheme } from "@mui/system";
 
 
-module.exports = App;
+
 
 const StyledPaper = styled(Paper)({
   width: "100%",
